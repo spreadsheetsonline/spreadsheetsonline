@@ -10,11 +10,11 @@ async function getItemNameFromTypeId(typeId) {
     })
 }
 
-async function fetchFrom(url) {
-    return axios.get(url).then(response => response.data).catch(err => {
-        console.log(err)
-    })
-}
+// async function fetchFrom(url) {
+//     return axios.get(url).then(response => response.data).catch(err => {
+//         console.log(err)
+//     })
+// }
 
 function getCurrentPriceInfo() {
     return axios.get('')
@@ -22,21 +22,21 @@ function getCurrentPriceInfo() {
 
 async function getItems() {
     return Promise.all(pricesAndTypeIds.map(async (item) => {
-        let data = await getItemNameFromTypeId(item.type_id)
+        let data = await getItemNameFromTypeId(item.type_id);
 
         try {
-            data.dogma_attributes = JSON.stringify(data.dogma_attributes)
+            data.dogma_attributes = JSON.stringify(data.dogma_attributes);
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
 
-        return { ...data, average_price: item.average_price, adjusted_price: item.adjusted_price }
+        return { ...data, average_price: item.average_price, adjusted_price: item.adjusted_price };
     }))
 }
 
-async function storeItem(item) {
-    return knex('items').insert(item).catch(err => console.log(err))
-}
+// async function storeItem(item) {
+//     return knex('items').insert(item).catch(err => console.log(err))
+// }
 
 async function app() {
     let items = await getItems()
