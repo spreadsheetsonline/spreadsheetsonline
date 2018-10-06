@@ -1,57 +1,44 @@
 const endPoints = require('./EveAPIEndPoints.js');
-const pricesAndTypeIds = require('../data/seedPrices.json');
-const axios = require('axios');
-const fs = require('fs');
-const knex = require('../../db/knex.js');
+const eveTechAPI = require('./eveTechAPI');
+const dbTools = require('../../db/tools');
 
-async function getItemNameFromTypeId(typeId) {
-    return axios.get(endPoints.getTypeNames(typeId)).then(response => response.data).catch(err => {
-        console.log(err)
-    })
-}
-
-// async function fetchFrom(url) {
-//     return axios.get(url).then(response => response.data).catch(err => {
-//         console.log(err)
-//     })
-// }
-
-function getCurrentPriceInfo() {
-    return axios.get('')
-}
 
 async function getItems() {
-    return Promise.all(pricesAndTypeIds.map(async (item) => {
-        let data = await getItemNameFromTypeId(item.type_id);
+    const prices = await eveTechAPI.getCurrentPrices();
+    
+    return Promise.all(await prices.map(async (item) => {
+        let data = await eveTechAPI.getItemFromTypeId(item.type_id);
 
-        try {
-            data.dogma_attributes = JSON.stringify(data.dogma_attributes);
-        } catch (err) {
-            console.log(err);
+        if(data) {
+            try {
+                data.dogma_attributes = JSON.stringify(data.dogma_attributes);
+            } catch (err) {
+                console.log(err);
+            }
         }
 
         return { ...data, average_price: item.average_price, adjusted_price: item.adjusted_price };
     }))
 }
 
-// async function storeItem(item) {
-//     return knex('items').insert(item).catch(err => console.log(err))
-// }
 
-async function app() {
-    let items = await getItems()
-
+async function addItems(items) {
     for (let i in items) {
+        console.log(items[i])
         try {
-            await storeItem(items[i])
+            dbTools.addItem(items[i]);
+            console.log('added ', items[i].name)
         } catch (e) {
-            console.log(err)
+            console.log(e);
+            return
         }
     }
-
-    return
+    return;
 }
 
-app()
+async function app() {
+    const items = await getItems();
+    addItems(items)
+}
 
-
+app();
