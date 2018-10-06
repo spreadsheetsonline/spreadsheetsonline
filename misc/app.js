@@ -40,6 +40,8 @@ async function app() {
             console.log(err)
         }
     }
+    
+    return
 }
 
 app()
