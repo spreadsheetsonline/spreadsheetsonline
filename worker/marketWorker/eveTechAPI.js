@@ -1,14 +1,15 @@
 const axios = require('axios');
 const ENDPOINTS = require('./EveAPIEndPoints')
 const eveTechApi = axios.create({
-    baseURL: 'https://esi.evetech.net/',
-    method: 'get',
-    transformResponse: [(data) => data.data]
+    baseURL: 'https://esi.evetech.net/latest',
+    method: 'get'
 })
 
 module.exports = {
-    async getFromEndPoint(endPoint) {
-        return axios.get(endPoint).catch(function (error) {
+    getFromEndPoint(endPoint) {
+        return eveTechApi.get(endPoint)
+        .then(data => data.data)
+        .catch(function (error) {
             if (error.response) {
                 console.log(error.response.data);
                 console.log(error.response.status);
@@ -23,10 +24,10 @@ module.exports = {
     },
 
     async getCurrentPrices() {
-        return await getFromEndPoint(ENDPOINTS.getCurrentPrices())
+        return this.getFromEndPoint(ENDPOINTS.getPrices());
     },
 
-    getItemFromTypeId: async (typeId) => {
-        return await getFromEndPoint(ENDPOINTS.getTypeNames(typeId))
+    async getItemFromTypeId(typeId) {
+        return this.getFromEndPoint(ENDPOINTS.getTypeNames(typeId));
     }
-}
+};
