@@ -27,7 +27,7 @@ async function addItems(items) {
         console.log(items[i])
         try {
             dbTools.addItem(items[i]);
-            console.log('added ', items[i].name)
+            console.log('added ', items[i].name);
         } catch (e) {
             console.log(e);
             return
