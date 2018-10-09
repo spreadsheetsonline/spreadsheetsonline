@@ -5,29 +5,33 @@ const eveTechApi = axios.create({
     method: 'get'
 })
 
+
+function handleAxiosError(error) {
+    if (error.response) {
+        console.error(error.response.data);
+        console.error(error.response.status);
+        console.error(error.response.headers);
+    } else if (error.request) {
+        console.error(error.request);
+    } else {
+        console.error('Error', error.message);
+    }
+    console.error(error.config);
+    return error
+}
+
 module.exports = {
     getFromEndPoint(endPoint) {
         return eveTechApi.get(endPoint)
         .then(data => data.data)
-        .catch(function (error) {
-            if (error.response) {
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-            } else if (error.request) {
-                console.log(error.request);
-            } else {
-                console.log('Error', error.message);
-            }
-            console.log(error.config);
-        });
+        .catch(handleAxiosError);
     },
 
-    async getCurrentPrices() {
+    getCurrentPrices() {
         return this.getFromEndPoint(ENDPOINTS.getPrices());
     },
 
-    async getItemFromTypeId(typeId) {
+    getItemFromTypeId(typeId) {
         return this.getFromEndPoint(ENDPOINTS.getTypeNames(typeId));
     }
 };

@@ -3,14 +3,22 @@ const sampleObject = require('../data/basicObjectRef.json');
 
 const itemTable = {
     addItem(item) {
-        return knex('items').insert(item).catch(err => console.log(err));
+        item = this.checkItem(item)
+        return knex('items').insert(item).catch(err => err);
     },
 
     checkItem(item) {
         Object.keys(sampleObject)
-        .forEach(k => !item.hasOwnProperty(k) ? item[k] = null : null )
+            .forEach(k => {
+                !item.hasOwnProperty(k) ? item[k] = null : null
+            })
 
         return item
+    },
+
+    findBy(tableName, columnName , value) {
+        return knex.select('type_id').from(tableName)
+        .where('type_id', type_id)
     }
 };
 

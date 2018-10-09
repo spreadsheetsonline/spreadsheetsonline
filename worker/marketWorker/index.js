@@ -1,44 +1,52 @@
-const endPoints = require('./EveAPIEndPoints.js');
 const eveTechAPI = require('./eveTechAPI');
 const dbTools = require('../../db/tools');
+const Bottleneck = require('bottleneck');
+const aigle = require('aigle');
 
+const rateLimiter = new Bottleneck({ maxConcurrent: null, minTime: 1500 });
+
+
+function localizeData(metadata, itemPrice) {
+    metadata.dogma_attributes = JSON.stringify(metadata.dogma_attributes);
+    return dbTools.addItem({ ...metadata, average_price: itemPrice.average_price, adjusted_price: itemPrice.adjusted_price });
+}
+
+
+
+
+async function addIfDoesNotExist(price) {
+    let {type_id} = price
+    let itemQueryResult = await dbTools.findBy('items', 'type_id', price.type_id)
+    
+    if (itemQueryResult.length === 0) {
+        let itemMeta = await eveTechAPI.getItemFromTypeId(price);
+
+        itemMeta.dogma_attributes = JSON.stringify(itemMeta.dogma_attributes)
+        
+        let itemFinalForm = {...itemMeta, typeId: price.type_id, average_price, adjusted_price}
+        dbTools.addItem(itemFinalForm)
+    } else {
+        console.log(typeId, 'was in the db already')
+    }
+
+}
 
 async function getItems() {
     const prices = await eveTechAPI.getCurrentPrices();
+
+    let results = await aigle.map(prices, price => {
+        return rateLimiter.schedule(() => {
+            return addIfDoesNotExist(price);
+        })
+    })
     
-    return Promise.all(await prices.map(async (item) => {
-        let data = await eveTechAPI.getItemFromTypeId(item.type_id);
-
-        if(data) {
-            try {
-                data.dogma_attributes = JSON.stringify(data.dogma_attributes);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-
-        return { ...data, average_price: item.average_price, adjusted_price: item.adjusted_price };
-    }))
 }
 
 
-async function addItems(items) {
-    for (let i in items) {
-        console.log(items[i])
-        try {
-            dbTools.addItem(items[i]);
-            console.log('added ', items[i].name);
-        } catch (e) {
-            console.log(e);
-            return
-        }
-    }
-    return;
-}
 
 async function app() {
-    const items = await getItems();
-    addItems(items)
+    getItems();
+    // dbTools.doesExistInTable('items', 34428)
 }
 
 app();
