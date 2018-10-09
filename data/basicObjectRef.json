@@ -115,6 +115,7 @@
     ],
     "group_id": 1156,
     "icon_id": 10935,
+    "graphic_id": 1234,
     "market_group_id": 610,
     "mass": 0,
     "name": "Medium Ancillary Shield Booster",
@@ -124,9 +125,6 @@
     "radius": 500,
     "type_id": 32772,
     "volume": 10,
-    "price": {
-        "adjusted_price": 988397.15,
-        "average_price": 988279.59,
-        "type_id": 32772
-    }
+    "adjusted_price": 988397.15,
+    "average_price": 988279.59
 }

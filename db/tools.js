@@ -1,17 +1,17 @@
 const knex = require('./knex');
 const sampleObject = require('../data/basicObjectRef.json');
 
-module.exports = {
+const itemTable = {
     addItem(item) {
         return knex('items').insert(item).catch(err => console.log(err));
     },
 
     checkItem(item) {
-        const stringItem = JSON.stringify(Object.keys(item));
-        const itemKeys = JSON.stringify(sampleObject);
+        Object.keys(sampleObject)
+        .forEach(k => !item.hasOwnProperty(k) ? item[k] = null : null )
 
-        if (itemKeys !== stringItem) {
-            return false;
-        };
+        return item
     }
 };
+
+module.exports = itemTable;
