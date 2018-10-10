@@ -32,11 +32,11 @@ module.exports = {
         return getFromEndPoint(ENDPOINTS.getPrices());
     },
 
-    getItemFromTypeId(typeId) {
-        return getFromEndPoint(ENDPOINTS.getTypeNames(typeId));
+    getItemFromTypeId(type_id) {
+        return getFromEndPoint(ENDPOINTS.getTypeNames(type_id));
     },
 
-    getMarketGroup() {
-        return getFromEndPoint(ENDPOINTS.getTypeNames(typeId))
+    getMarketGroup(market_group_id) {
+        return getFromEndPoint(ENDPOINTS.getMarketGroup(market_group_id))
     }
 };

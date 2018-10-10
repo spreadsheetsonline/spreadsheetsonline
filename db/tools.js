@@ -21,6 +21,11 @@ const itemTable = {
     findBy(tableName, columnName , columnValue) {
         return knex.select(columnName).from(tableName)
         .where(columnName, columnValue).then(data => data).catch(err => err)
+    },
+
+    findByReturningColumns(tableName, columnName, columnValue, arrayOfReturnColumns) {
+        return knex.select(columnName).from(tableName)
+        .where(columnName, columnValue).catch(err => {throw err})
     }
 };
 

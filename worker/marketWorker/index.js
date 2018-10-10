@@ -38,7 +38,7 @@ async function getItems() {
 }
 
 function getGroup() {
-    
+    const marketGroupIds = dbTools.get
 
 }
 
