@@ -3,8 +3,10 @@ const sampleObject = require('../data/basicObjectRef.json');
 
 const itemTable = {
     addItem(item) {
+        console.log('ITEM: ', item.name)
         item = this.checkItem(item)
-        return knex('items').insert(item).catch(err => err);
+
+        return knex('items').insert(item).catch(err => {console.log(err); console.log(item)});
     },
 
     checkItem(item) {
@@ -16,9 +18,9 @@ const itemTable = {
         return item
     },
 
-    findBy(tableName, columnName , value) {
-        return knex.select('type_id').from(tableName)
-        .where('type_id', type_id)
+    findBy(tableName, columnName , columnValue) {
+        return knex.select(columnName).from(tableName)
+        .where(columnName, columnValue).then(data => data).catch(err => err)
     }
 };
 
