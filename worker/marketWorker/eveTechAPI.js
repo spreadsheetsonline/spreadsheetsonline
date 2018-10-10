@@ -20,18 +20,23 @@ function handleAxiosError(error) {
     return error
 }
 
-module.exports = {
-    getFromEndPoint(endPoint) {
-        return eveTechApi.get(endPoint)
-        .then(data => data.data)
-        .catch(handleAxiosError);
-    },
+function getFromEndPoint(endPoint) {
+    return eveTechApi.get(endPoint)
+    .then(data => data.data)
+    .catch(handleAxiosError);
+}
 
+
+module.exports = {
     getCurrentPrices() {
-        return this.getFromEndPoint(ENDPOINTS.getPrices());
+        return getFromEndPoint(ENDPOINTS.getPrices());
     },
 
     getItemFromTypeId(typeId) {
-        return this.getFromEndPoint(ENDPOINTS.getTypeNames(typeId));
+        return getFromEndPoint(ENDPOINTS.getTypeNames(typeId));
+    },
+
+    getMarketGroup() {
+        return getFromEndPoint(ENDPOINTS.getTypeNames(typeId))
     }
 };

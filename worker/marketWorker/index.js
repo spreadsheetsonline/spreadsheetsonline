@@ -33,8 +33,13 @@ async function getItems() {
         })
     })
 
-    console.log(results, "results")
+    console.log(results, "results");
     return results;
+}
+
+function getGroup() {
+    
+
 }
 
 
