@@ -1,5 +1,7 @@
 const knex = require('./knex');
-const sampleObject = require('../data/basicObjectRef.json');
+const sampleItem = require('../data/basicObjectRef.json');
+const sampleMarketGroupId = require('../data/sampleMarketGroupId.json')
+
 
 const itemTable = {
     addItem(item) {
@@ -9,13 +11,13 @@ const itemTable = {
         return knex('items').insert(item).catch(err => {console.log(err); console.log(item)});
     },
 
-    checkItem(item) {
+    checkObject(obj, sampleObject) {
         Object.keys(sampleObject)
             .forEach(k => {
-                !item.hasOwnProperty(k) ? item[k] = null : null
+                !obj.hasOwnProperty(k) ? obj[k] = null : null
             })
 
-        return item
+        return obj
     },
 
     findBy(tableName, columnName , columnValue) {
@@ -23,9 +25,14 @@ const itemTable = {
         .where(columnName, columnValue).then(data => data).catch(err => err)
     },
 
-    findByReturningColumns(tableName, columnName, columnValue, arrayOfReturnColumns) {
-        return knex.select(columnName).from(tableName)
-        .where(columnName, columnValue).catch(err => {throw err})
+    findByReturningColumns(tableName, columnName) {
+        return knex.distinct(columnName).from(tableName).whereNotNull(columnName).catch(err => {throw err})
+    },
+
+    addGroup(tableName, group) {
+        console.log('market_group: ', group.name)
+        group = this.checkObject(group, sampleMarketGroupId)
+        return knex(tableName).insert(group).catch(err => console.log(err))
     }
 };
 
