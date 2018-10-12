@@ -1,5 +1,4 @@
 node_modules
+package-lock.*
 knexfile.js
 .vscode
-.env
-*.log
