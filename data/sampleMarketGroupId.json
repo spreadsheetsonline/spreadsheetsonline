@@ -1,0 +1,22 @@
+{
+    "description": "Modifications that affect a small starship's energy weapons.",
+    "market_group_id": 1225,
+    "name": "Small Energy Weapon Rigs",
+    "parent_group_id": 962,
+    "types": [
+      31424,
+      31490,
+      31460,
+      31430,
+      31496,
+      31466,
+      31436,
+      31472,
+      31442,
+      31478,
+      31448,
+      31418,
+      31484,
+      31454
+    ]
+  }
