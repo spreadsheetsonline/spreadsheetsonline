@@ -10,17 +10,13 @@ const itemTable = {
     return knex('items')
       .insert(newItem)
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         console.log(newItem);
       });
   },
 
   checkObject(obj, sampleObject) {
-    Object.keys(sampleObject).forEach((k) => {
-      !obj.hasOwnProperty(k) ? (obj[k] = null) : null;
-    });
-
-    return obj;
+    return Object.assign(obj, sampleObject);
   },
 
   findBy(tableName, columnName, columnValue) {
