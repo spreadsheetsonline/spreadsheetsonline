@@ -13,8 +13,6 @@ describe('tools handles all the db functions', () => {
     const missing = {};
     const actualMissing = tools.checkItem(missing);
 
-    expect(Object.keys(actualMissing).toString()).to.equal(
-      Object.keys(testItem).toString(),
-    );
+    expect(Object.keys(actualMissing).toString()).to.equal(Object.keys(testItem).toString());
   });
 });
