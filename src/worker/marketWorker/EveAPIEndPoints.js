@@ -1,6 +1,4 @@
-module.exports =  {
-    getTypes: () => "/universe/types/?datasource=tranquility&page=1",
-    getTypeNames: (typeId) => `/universe/types/${typeId}/?datasource=tranquility&language=en-us`,
-    getPrices: () => `/markets/prices/?datasource=tranquility`,
-    getMarketGroup: (market_group_id) => `/markets/groups/${market_group_id}/?datasource=tranquility&language=en-us`
-}
+export function getTypes() { return '/universe/types/?datasource=tranquility&page=1'; }
+export function getTypeNames(id) { return `/universe/types/${id}/?datasource=tranquility&language=en-us`; }
+export function getPrices() { return '/markets/prices/?datasource=tranquility'; }
+export function getMarketGroup(id) { return `/markets/groups/${id}/?datasource=tranquility&language=en-us`; }

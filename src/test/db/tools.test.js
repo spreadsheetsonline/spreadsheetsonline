@@ -1,5 +1,9 @@
 /* eslint-env mocha */
 
+require('babel-register')({
+  presets: [ 'env' ]
+})
+
 const { expect } = require('chai');
 const tools = require('../../db/tools');
 const testItem = require('../../data/basicObjectRef.json');
