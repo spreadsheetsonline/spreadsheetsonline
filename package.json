@@ -4,6 +4,7 @@
   "description": "eve online personal project",
   "main": "./worker/marketWorker/index.js",
   "scripts": {
+    "migrate": "knex migrate:latest",
     "test": "mocha 'src/test/**/*.js'",
     "lint": "eslint src --ignore-path .gitignore ",
     "format": "prettier --write '{src,public}/**/*.js' '{src,public}/*/!(node_modules)/**/*.js'"
