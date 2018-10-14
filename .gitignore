@@ -1,5 +1,4 @@
 node_modules
-knexfile.js
 .vscode
 .env
 *.log
