@@ -31,9 +31,8 @@ class MarketWorker {
   async getItems() {
     const prices = await eveTechAPI.getCurrentPrices();
 
-    const results = await aigle.map(prices, price =>
-      rateLimiter.schedule(() => this.addIfDoesNotExistPrice(price))
-    );
+    const results = await aigle
+      .map(prices, price => rateLimiter.schedule(() => this.addIfDoesNotExistPrice(price)));
 
     console.log(results, 'results');
     return results;
@@ -61,9 +60,8 @@ class MarketWorker {
   async addGroupIds(from, to) {
     const groups = await this.getGroupIds(from);
 
-    const results = await aigle.map(groups, group =>
-      rateLimiter.schedule(() => this.getAndAdd(group[from], to))
-    );
+    const results = await aigle
+      .map(groups, group => rateLimiter.schedule(() => this.getAndAdd(group[from], to)));
 
     return results;
   }
