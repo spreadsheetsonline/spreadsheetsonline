@@ -7,7 +7,7 @@ const rateLimiter = new Bottleneck({ maxConcurrent: 5, minTime: 100 });
 
 class MarketWorker {
   static async addIfDoesNotExistPrice(price) {
-    const { type_id, average_price, adjusted_price } = price;   // eslint-disable-line
+    const { type_id, average_price, adjusted_price } = price; // eslint-disable-line
     const itemQueryResult = await dbTools.findBy('items', 'type_id', type_id);
     if (itemQueryResult.length === 0) {
       const itemMeta = await eveTechAPI.getItemFromTypeId(type_id);
@@ -31,8 +31,9 @@ class MarketWorker {
   async getItems() {
     const prices = await eveTechAPI.getCurrentPrices();
 
-    const results = await aigle.map(prices, price => rateLimiter
-      .schedule(() => this.addIfDoesNotExistPrice(price)));
+    const results = await aigle.map(prices, price =>
+      rateLimiter.schedule(() => this.addIfDoesNotExistPrice(price))
+    );
 
     console.log(results, 'results');
     return results;
@@ -60,8 +61,9 @@ class MarketWorker {
   async addGroupIds(from, to) {
     const groups = await this.getGroupIds(from);
 
-    const results = await aigle.map(groups, group => rateLimiter
-      .schedule(() => this.getAndAdd(group[from], to)));
+    const results = await aigle.map(groups, group =>
+      rateLimiter.schedule(() => this.getAndAdd(group[from], to))
+    );
 
     return results;
   }

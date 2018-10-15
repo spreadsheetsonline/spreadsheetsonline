@@ -1,14 +1,14 @@
-const express = require('express');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const auth = require('../routes/auth');
+import express from 'express';
+import morgan from 'morgan';
+import { json } from 'body-parser';
+import auth from '../routes/auth';
 
 const app = express();
 
 const PORT = process.env.PORT || 8000;
 
 app.use(morgan('dev'));
-app.use(bodyParser.json());
+app.use(json());
 
 app.use('/auth', auth);
 

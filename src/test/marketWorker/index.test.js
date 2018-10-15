@@ -1,11 +1,9 @@
 /* eslint-env mocha */
 
-require('babel-register')({
-  presets: [ 'env' ]
-})
+// const babelCore = require('@babel/core')
 
-import { it } from 'mocha';
-import { assert } from 'chai';
+
+import { expect } from 'chai';
 import MarketWorker from '../../worker/marketWorker';
 
 const className = 'MarketWorker';

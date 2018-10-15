@@ -9,7 +9,9 @@ const itemTable = {
 
     return knex('items')
       .insert(newItem)
-      .catch((err) => { throw err; });
+      .catch((err) => {
+        throw err;
+      });
   },
 
   checkObject(obj, sampleObject) {

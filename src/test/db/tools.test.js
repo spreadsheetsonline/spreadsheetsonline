@@ -1,9 +1,5 @@
 /* eslint-env mocha */
 
-require('babel-register')({
-  presets: [ 'env' ]
-})
-
 const { expect } = require('chai');
 const tools = require('../../db/tools');
 const testItem = require('../../data/basicObjectRef.json');
@@ -16,6 +12,8 @@ describe('tools handles all the db functions', () => {
   it('should add all the right values', () => {
     const missing = {};
     const actualMissing = tools.checkObject(missing, testItem);
-    expect(Object.keys(actualMissing).toString()).to.equal(Object.keys(testItem).toString());
+    expect(Object.keys(actualMissing).toString()).to.equal(
+      Object.keys(testItem).toString(),
+    );
   });
 });
