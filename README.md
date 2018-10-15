@@ -9,7 +9,7 @@ A fullstack app for the game eve online using API's made available by the develo
 - ```publicData esi-mail.organize_mail.v1```  
 - ```esi-wallet.read_character_wallet.v1```
 - ```esi-wallet.read_corporation_wallet.v1```
-- ```esi-assets.read_assets.v1``` 
+- ```esi-assets.read_assets.v1```
 - ```esi-planets.manage_planets.v1```
 - ```esi-ui.open_window.v1```
 - ```esi-characters.read_agents_research.v1```
